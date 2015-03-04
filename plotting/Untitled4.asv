@@ -1,0 +1,22 @@
+function plotSpikesWithStimulus(Gid, cellId)
+
+
+    spks = getSpikes(Gid, cellId);
+    
+    getStim
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end

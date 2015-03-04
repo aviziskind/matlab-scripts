@@ -1,0 +1,5 @@
+function y = skewLogNormal_exp(f, r_max, r_bkg, f_opt, w, s)
+    
+    y = (r_max - r_bkg)./(1-exp(-1/s.^2)) * ( exp( - ( log(f./f_opt)./(w + s.*log(f./f_opt) ) ).^2 ) - exp(-1./s.^2) ) + r_bkg;
+
+end

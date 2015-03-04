@@ -1,0 +1,82 @@
+function [allLevels, allLevelContours] = contourMtx2Cell(C)
+    % first pass: how many levels
+%     if nargin < 2
+    Nc = size(C,2);
+    
+    nLevelsDflt = 20;
+    
+    
+    % (Step 1) Find # of Levels
+    i = 1;    
+    cur_level = nan;
+    nLevels = 0;
+    while i < Nc
+        c_level = C(1,i);
+        Ni = C(2,i);        
+        if c_level ~= cur_level
+            cur_level = c_level;
+            nLevels = nLevels+1;            
+        end                 
+        i = i+Ni+1;
+    end
+
+    % (Step 2) Find actual levels and # of contours for each level
+    allLevels = zeros(1,nLevels);
+    nContoursPerLevel = ones(1,nLevels);
+    
+    i = 1;    
+    cur_level_idx = 0;
+    cur_level = nan;
+    while i < Nc
+        c_level = C(1,i);
+        Ni = C(2,i);                
+        if c_level ~= cur_level
+            cur_level_idx = cur_level_idx+1;
+            cur_level = c_level;
+            allLevels(cur_level_idx) = cur_level;
+        else
+            nContoursPerLevel(cur_level_idx) =  nContoursPerLevel(cur_level_idx)+1;
+        end
+        i = i+Ni+1;
+    end
+    
+    
+    3;
+    
+    % (Step 3) Put in the contours in to the cellarray
+    
+    
+    3;
+    
+    allContours = cell(1,nLevels);
+
+    i = 1;    
+    cur_level = nan;
+    level_idx = 0;
+    while i < Nc
+        c_level = C(1,i);
+        Ni = C(2,i);        
+        if c_level ~= cur_level
+            cur_level = c_level;
+            nLevels = nLevels+1;            
+        end                 
+        i = i+Ni+1;
+    end
+    
+        
+    if c_level ~= cur_level
+        level_idx = level_idx+1;
+        allLevels(level_idx) = c_level;
+    end
+        
+        
+%     C(:,
+% 
+%     for i = 1:
+    
+
+
+
+
+
+end

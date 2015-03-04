@@ -1,0 +1,55 @@
+function testPearsonRv
+
+    doR = 1;
+    doRho = 1;
+    doTau = 1;
+
+    doWithoutPval = 1;    
+    doWithPval = 1;
+    
+    L = 5;
+    N = 50000;    
+    
+    X1 = randn(L,N);
+    X2 = randn(L,N);
+    
+    
+    pvals = {'yes', 'no'};
+    names = {'r', 'rho', 'tau'};    
+    doTests = [doR, doRho, doTau];
+    if doWithoutPval
+        
+        for ti = find(doTests);
+            switch names(ti)
+                case 'r',   func1 = @pearsonR; func2 = @pearsonR_v;
+                case 'rho', func1 = @spearmanRho; func2 = @spearmanRho_v;
+                case 'tau', func1 = @kendallTau; func2 = @kendallTau_v;
+            end
+                
+            tic;
+            ccs1 = zeros(1,N);
+            for i = 1:N
+                ccs1(i) = pearsonR(X1(:,i), X2(:,i));
+            end
+            t1 = toc;
+            tic;
+            ccs2 = pearsonR_v(X1, X2);
+            t2 = toc;    
+            assert(isequal(ccs1, ccs2));    
+            fprintf('r : %.2f times faster\n', t1/t2); 
+    end
+    if doRho
+        tic;
+        rhos1 = zeros(1,N);
+        for i = 1:N
+            rhos1(i) = spearmanRho(X1(:,i), X2(:,i));
+        end
+        t1 = toc;
+        tic;
+        rhos2 = spearmanRho_v(X1, X2);
+        t2 = toc;    
+        assert(isequal(rhos1, rhos2));    
+        fprintf('rho : %.2f times faster\n', t1/t2);                 
+    end
+    
+end

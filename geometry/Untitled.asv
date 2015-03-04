@@ -1,0 +1,10 @@
+output:
+-0 - small-spikes multi-unit
+-1 - discarded spikes
+-2 - ALL spikes at the site
+
+internal representation
+-small spikes
+-discarded spikes : -
+-discarded clusters : 
+

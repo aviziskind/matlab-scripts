@@ -1,0 +1,10 @@
+%%
+a = .02;
+b = .05;
+f = [0 a a b b 1]; 
+m = [0 0 1 1 0 0];
+b = fir2(500,f,m);
+[h,w] = freqz(b,1,128);
+plot(f,m,w/pi,abs(h))
+legend('Ideal','fir2 Designed')
+title('Comparison of Frequency Response Magnitudes')

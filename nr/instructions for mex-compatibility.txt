@@ -1,0 +1,10 @@
+converting to matlab-compatible
+-------------------------------
+
+fprintf 		--> mexPrintf
+fprintf(stderr, ...)	--> mexErrMsgTxt
+malloc			--> mxMalloc
+calloc			--> mxCalloc
+realloc			--> mxRealloc
+free			--> mxFree
+nrerror			--> mexErrMsgTxt

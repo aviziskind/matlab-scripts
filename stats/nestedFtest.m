@@ -1,0 +1,63 @@
+function [p, fstat] = nestedFtest(varargin)
+
+%     p = nestedFtest(S1, S2)       % S1 and S2 have fields ('normr' and 'df') [eg. outputs from polyfit] 
+%     p = nestedFtest(SS1, DF1, SS2, DF2)
+%     p = nestedFtest(x, y, Y1, Y2, nparam1, nparam2)
+%     p = nestedFtest(x, y, Func1, Func2, nparam1, nparam2)
+
+    if (nargin == 6) && isnumeric(varargin{3})
+        [X, Y, Y1, Y2, nparam1, nparam2] = varargin{:};
+        SS1 = sum( (Y-Y1).^2);
+        SS2 = sum( (Y-Y2).^2);
+        DF1 = length(X)-nparam1-1;
+        DF2 = length(X)-nparam2-1;
+        
+    elseif (nargin == 6) && isa(varargin{3}, 'function_handle')
+        [X, Y, F1, F2, nparam1, nparam2] = varargin{:};
+        Y1 = F1(X);
+        Y2 = F2(X);
+        SS1 = sum( (Y-Y1).^2);
+        SS2 = sum( (Y-Y2).^2);
+        DF1 = length(X)-nparam1-1;
+        DF2 = length(X)-nparam2-1;
+
+    elseif (nargin == 4) && isnumeric(varargin{1})
+        [SS1, DF1, SS2, DF2] = varargin{:};
+
+    elseif (nargin == 2) && isstruct(varargin{1}) && isfield(varargin{1}, 'normr')
+        S1 = varargin{1};
+        SS1 = S1.normr.^2;
+        DF1 = S1.df;
+
+        S2 = varargin{2};
+        SS2 = S2.normr.^2;
+        DF2 = S2.df;
+    end
+
+    if DF1 == DF2
+        p = 1;
+        return;
+    end
+    
+    % Model #1 is the simpler one (with fewer parameters) so has a higher # degrees of freedom) 
+    if DF1 < DF2  
+        [DF1, DF2] = deal(DF2, DF1);
+        [SS1, SS2] = deal(SS2, SS1);                
+    end
+    
+    % Model #1 (simpler model) should have larger residuals
+    if SS1 < SS2
+        p = 1;
+        return;
+    end
+
+    % With larger degrees of freedom in Model #1, expect a proportionate increase in residuals, just
+    % by chance. fstat quantifies how much greater is the residuals than chance. (ie. if much greater 
+    % than 1, then is likely that Model 2 (with more parameters) is the correct model. The probability
+    % that we would have obtained the data in x & y (which fits Model #2 so much better) from Model #1 
+    % is "p". 
+    
+    fstat = ((SS1-SS2)/(DF1-DF2))/(SS2/DF2);
+    p = 1-fcdf(fstat, DF1-DF2, DF2);
+
+end

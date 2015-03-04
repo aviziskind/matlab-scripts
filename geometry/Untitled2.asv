@@ -1,0 +1,15 @@
+function fname = getFileName(fileType, Gid, matchSpiker)
+    if nargin < 3
+        matchSpiker = false;
+    end
+
+    suffix = iff(matchSpiker, '_spkr', '');
+    spikerSubdir = iff(matchSpiker, 'spiker\', '');
+    
+    switch fileType
+        case 'meansCov',   fname = [spikePath 'channelsMeanCov\' spikerSubdir 'Group_' num2str(Gid) '_chnlsMeanCov' suffix '.mat'];
+        case 'startEnd',   fname = [spikePath 'spikeStartsEnds\' spikerSubdir 'Group_' num2str(Gid) '_spkStartEnd'  suffix '.mat'];
+        case 'properties', fname = [spikePath 'spikeProperties\' spikerSubdir 'Group_' num2str(Gid) '_spkStartEnd'  suffix '.mat'];
+        case 'waveforms',  fname = [spikePath 'spikeWaveforms\'  spikerSubdir 'Group_' num2str(Gid) '_spkWaveforms' suffix '.mat'];
+    end
+end

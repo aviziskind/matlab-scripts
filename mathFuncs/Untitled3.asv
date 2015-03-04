@@ -1,0 +1,9 @@
+function generateDBspikeFile(Gid)
+    
+     spikes = dbGetSpikes(Gid, [], [], 1, 1);
+     
+    
+
+
+
+end
