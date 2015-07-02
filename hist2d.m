@@ -42,7 +42,7 @@ function mHistOut = hist2d (X, Y, xBinVar, yBinVar, weights, plotFlag)
     end
     switch length(yBinVar)
         case 1,  %% assume input is nBinsY
-            yedges = linspace(min(mX(:,2)), max(mX(:,2)), yBinVar);
+            yedges = linspace(min(Y), max(Y), yBinVar);
         case 2,  %% assume input is [edgemin, edgemax]
             yedges = linspace(yBinVar(1), yBinVar(2), 10);
         otherwise  %% assume input is [yBinEdges]
@@ -88,7 +88,7 @@ function mHistOut = hist2d (X, Y, xBinVar, yBinVar, weights, plotFlag)
 end
 
 
-function mHist = hist2D_histcntMethod(xdata, ydata, xedges, yedges, weights)
+function [mHist, binIds_x, binIds_y] = hist2D_histcntMethod(xdata, ydata, xedges, yedges, weights)
     %%
     haveWeights = ~isempty(weights);
     nBinX = length(xedges)-1;
@@ -110,8 +110,10 @@ function mHist = hist2D_histcntMethod(xdata, ydata, xedges, yedges, weights)
             mHist(binIds_x(i), binIds_y(i) ) = mHist(binIds_x(i), binIds_y(i) ) + 1;     
         end                
     end
-    assert( all (abs( sum(mHist,1)  - nMargin_y)) < 1e-10  )
-    assert( all (abs( sum(mHist,2)' - nMargin_x)) < 1e-10  )
+    s1 = sum(mHist,1);
+    s2 = sum(mHist,2);
+    assert( all (abs( s1(:) - nMargin_y(:) )) < 1e-10  )
+    assert( all (abs( s2(:) - nMargin_x(:))) < 1e-10  )
 %     assert(isequal( sum(mHist,2)', nMargin_x))
     
 end

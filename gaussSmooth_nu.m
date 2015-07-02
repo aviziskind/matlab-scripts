@@ -36,7 +36,7 @@ function Y2 = gaussSmooth_nu(X, Y1, w, dim)
         idx_start = find(X(i)-max_dist <= X, 1, 'first');
         idx_end   = find(X(i)+max_dist >= X, 1, 'last');
         idxs = idx_start:idx_end;
-        assert( all( abs(X(idxs)- X(i)) <= max_dist))
+        assert( all( abs(X(idxs)- X(i)) <= (max_dist* (1 + 1e-5)) ))
         wgts = gaussian( X(idxs), X(i), w);
         wgts = wgts(:)/sum(wgts);
         

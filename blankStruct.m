@@ -1,3 +1,6 @@
-function s_blnk = blankStruct(s)
-    s_blnk = structfun(@(fld) [], s, 'un', 0);
+function s_blnk = blankStruct(s, blankValue)
+    if nargin < 2
+        blankValue = [];
+    end
+    s_blnk = structfun(@(fld) blankValue, s, 'un', 0);
 end
