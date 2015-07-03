@@ -16,6 +16,9 @@ else
     host = getenv('host');
     hostname = getenv('hostname');   % in my .bashrc script, this is set to be the hostname (hostname = $HOSTNAME)    
 end
+host = strrep(host, '-', '_');
+hostname = strrep(hostname, '-', '_');
+
 
 onNYUserver = ~isempty(strfind(hostname, 'nyu.edu'));
 
