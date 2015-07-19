@@ -3,7 +3,7 @@ function profilePath(cmd, pathname)
     %eg: profilePath('load', 'CatV1Exp')
     %eg: profilePath('save', 'miller')
     %eg: profilePath('restore')
-    global hostname
+    global host
     
     alwaysRedoBuiltinPath = false;
 %     changeOldMatlabPathToNew = 1;
@@ -50,7 +50,7 @@ function profilePath(cmd, pathname)
     if nargin == 0,
         cmd = 'list';
     end
-    builtinPathName = ['R' matlab_version '_' hostname '_' computer '_builtin_path'];
+    builtinPathName = ['R' matlab_version '_' host '_' computer '_builtin_path'];
     if ~isfield(S, builtinPathName) || alwaysRedoBuiltinPath
         curBuiltinPath = getBuiltinMatlabPaths;
         S.(builtinPathName) = curBuiltinPath;
