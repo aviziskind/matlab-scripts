@@ -61,15 +61,15 @@ if onNYUserver
     warning('off', 'MATLAB:dispatcher:pathWarning')
 end
 
-profilePath('load', 'CatV1Exp');
-% profilePath('load', 'nyu');
+% profilePath('load', 'CatV1Exp');  cd(CatV1Path)
+
+profilePath('load', 'nyu'); cd(lettersCodePath);
+
 
 if onNYUserver
     warning('on', 'MATLAB:dispatcher:pathWarning')
 end
 
-% cd(lettersPath)
-cd(CatV1Path)
 
 
     

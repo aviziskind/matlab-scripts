@@ -1,4 +1,4 @@
-function s = lettersPath
+function s = lettersCodePath
     
 %     persistent lettersPath_str
 %     if isempty(lettersPath_str)
