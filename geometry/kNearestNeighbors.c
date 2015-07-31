@@ -1,7 +1,7 @@
 
 #include "mex.h"
 // #include "assert.h"
-
+#include "string.h"
 
 #define N_MAX_FOR_FASTER_ALGORITHM_WORK_PC  30000
 #define N_MAX_FOR_FASTER_ALGORITHM_LAPTOP   100
