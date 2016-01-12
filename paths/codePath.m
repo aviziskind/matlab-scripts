@@ -5,7 +5,7 @@ function s = codePath
         s = 'F:\';
     else
         if onNYUserver
-            s = '~/f/';
+            s = '/home/ziskind/f/';
 %             s = '/home/ziskind/f/'; % '/home/ziskind/Code/MATLAB'; or '~/Code/MATLAB'
         else
 %             s = '/f/';

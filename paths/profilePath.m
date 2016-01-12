@@ -19,7 +19,12 @@ function profilePath(cmd, pathname)
 % %         codepath_laptop = '/f';
 %         codepath_laptop = '/media/avi/Storage/Users/Avi/Code';
 %     end
-%     codepath_nyu    = '~/f/'; % '/home/ziskind/Code/MATLAB'; or '~/Code/MATLAB'
+    codepath_nyu       = '/home/ziskind/f/'; % '/home/ziskind/Code/MATLAB'; or '~/Code/MATLAB'
+    codepath_laptop_win    = 'F:\';
+    codepath_laptop_linux  = '/media/avi/Storage/Users/Avi/Code/';
+    
+    
+    
 %     onNYUserver
 %     [~, hostname] = system('hostname');
 %     if strncmp(hostname, 'XPS', 3)  
@@ -59,9 +64,9 @@ function profilePath(cmd, pathname)
         curBuiltinPath = S.(builtinPathName);
     end
 
-    
+        
 %     absolutePaths.codepath = {codepath_abs, codepath_laptop, codepath_nyu, '/home/avi/Code' };
-    absolutePaths.codepath = {codepath_abs };
+    absolutePaths.codepath = {codepath_abs, codepath_nyu, codepath_laptop_win, codepath_laptop_linux };
     pathsReplace.myscripts = 'scripts';
 
 %     absolutePaths.codepath = {codepath_abs, codepath_laptop, codepath_nyu, '/home/avi/Code/', strrep(userpath, ':', '') };
@@ -95,7 +100,8 @@ function profilePath(cmd, pathname)
                     newPath_loaded = sort(newPath_loaded);
                     
                     if savePathsInRelativeFormat
-                        newPath_loaded = convertToAbsoluteFormat(newPath_loaded, absolutePaths);
+                        newPath_loaded_rel = convertToRelativeFormat(newPath_loaded, absolutePaths);
+                        newPath_loaded = convertToAbsoluteFormat(newPath_loaded_rel, absolutePaths);
                     end
                     
                     

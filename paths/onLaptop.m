@@ -2,7 +2,7 @@ function tf = onLaptop
     
     hostname = getHostname();
     
-    if strncmp(hostname, 'XPS', 3)
+    if strncmp(hostname, XPSLaptopName, 3)
         tf = true;
     elseif ~isempty(strfind(hostname, 'nyu.edu'))
         tf = false;
