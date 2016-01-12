@@ -39,13 +39,15 @@ function varargout = varBreakdown(X, fieldnm)
         
     end
     
+    maxLengthN = ceil( max(log10(ns_num) ) );
     breakdown = [ns, vals];
-    fprintf('   N       Values\n -----    ----------------\n')
+    fprintf('       N              Values\n');
+    fprintf('  ------------    ----------------\n')
     for i = 1:length(ns)
         if ~addPct
-            fprintf(' %4d  :  %s \n', ns{i}, num2str(vals{i})); 
+            fprintf(' %*d  :  %s \n', maxLengthN, ns{i}, num2str(vals{i})); 
         else
-            fprintf(' %4d (%4.1f%%) :  %s \n', ns{i}, ns{i}/sum(ns_num)*100, num2str(vals{i})); 
+            fprintf(' %*d (%4.1f%%) :  %s \n', maxLengthN, ns{i}, ns{i}/sum(ns_num)*100, num2str(vals{i})); 
         end
     end
   

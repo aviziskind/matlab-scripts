@@ -24,6 +24,7 @@ function str = sec2hms(time_sec)
         end
     end
 %         disptype = type(1);
+    twodec_with1Dec = '%03.1f';
     twodec = '%02.f';
     onedec = '%1.f';
     %%
@@ -35,9 +36,9 @@ function str = sec2hms(time_sec)
     
     switch type
         case 'seconds'
-            str = sprintf('%s%2.1fs', sign_str, time_sec);
+            str = sprintf(['%s' twodec_with1Dec 's'], sign_str, time_sec);
         case 'minutes'
-            str = sprintf(['%s' twodec 'm' twodec 's'], sign_str, time_min, time_sec);
+            str = sprintf(['%s' twodec 'm' twodec_with1Dec 's'], sign_str, time_min, time_sec);
         case 'hours'
             str = sprintf(['%s' onedec 'h' twodec 'm' twodec 's'], sign_str, time_hrs, time_min, time_sec);
         case 'days'
