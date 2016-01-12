@@ -63,7 +63,7 @@ end
 
 % profilePath('load', 'CatV1Exp');  cd(CatV1Path)
 
-profilePath('load', 'nyu'); cd(lettersCodePath);
+profilePath('load', 'fhwa'); cd(fhwaCodePath);
 
 
 if onNYUserver
