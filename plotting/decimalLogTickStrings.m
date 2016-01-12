@@ -7,7 +7,7 @@ function [tickVals_str, tickVals] = decimalLogTickStrings(loglims)
     log_tickVals = loglim_lo : loglim_hi;  %log10(loglims(1)) : log10(loglims(2));
     tickVals = 10.^log_tickVals;
     
-    tickVals = tickVals(ibetween(tickVals, loglims))
+    tickVals = tickVals(ibetween(tickVals, loglims));
     
     nTicks = length(tickVals);
 

@@ -7,5 +7,21 @@ function s = lettersDataPath
 %     lettersPath_str = [codePath 'MATLAB' filesep  'nyu' filesep 'letters' filesep];
 %     s = lettersPath_str;
 
-     s = [codePath 'nyu' fsep 'letters' fsep 'data' fsep];
+     
+     
+     if onLaptop
+
+         s = [codePath 'nyu' fsep 'letters' fsep 'data' fsep];
+
+     else
+          
+%              lettersPath 'datasets' fsep];
+%         s = ['/misc/vlgscratch2/LecunGroup/ziskind/lettersData/MATLAB/datasets/'];
+%         s = ['~/lettersData/'];
+        s = ['/home/ziskind/lettersData/'];
+%              lettersPath 'datasets' fsep];
+         
+     end
+
+     
 end

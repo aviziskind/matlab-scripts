@@ -28,9 +28,15 @@ function [tiled, imageStack] = tileImages(imageStack, m,n, nBlanks, blankScale, 
     n = abs(n);
 
     
+    if iscell(blankScale)
+        blankValue = blankScale{1};
+    else
 %%
-    blankValue = blankScale*double( max(abs(imageStack(:))) );
-
+        Mx = max((imageStack(:)));
+        Mn = min((imageStack(:)));
+        blankValue = double( Mn + blankScale*(Mx - Mn) );
+    end
+    
     H = (h+nBlanks)*m + nBlanks;
     W = (w+nBlanks)*n + nBlanks;
     
