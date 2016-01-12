@@ -10,6 +10,20 @@ function [S, methodId] = compress(X, methodId)
     %          the corresponding original values (this helps save space because the original values 
     %          might be of double precision (8 bytes), but the indices might be only uint8 (1 byte)).    
 %     % note: the matlab 'sparse' function only works on 1D or 2D arrays, and
+    
+    isCellInput = iscell(X);
+    if isCellInput  % can handle cell arrays, as long as all elements of the cell array are the same dimension.
+        allSizes = cellfun(@size, X(:), 'un', 0);
+        if ~all( cellfun(@(sz) isequal(sz, allSizes{1}), allSizes ) )
+            error('Can only compress cell arrays that are all the same size');
+        end
+        sz = allSizes{1};
+        cell_dimCompress = length(sz)+1;
+        cell_sizeX = size(X);
+        X = cat(cell_dimCompress, X{:});
+        
+    end
+
 
     firstGetNonZeros = false;
     n_total = numel(X);     
@@ -103,6 +117,11 @@ function [S, methodId] = compress(X, methodId)
         S = struct('uVals', uVals, 'vals_idx', X_idx);
     elseif methodId == 3  % just store original matrix
         S = struct('orig_vals', X);        
+    end
+    
+    if isCellInput
+        S.cell_dimCompress = cell_dimCompress;
+        S.cell_sizeX = cell_sizeX;
     end
         
 

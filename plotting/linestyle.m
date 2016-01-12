@@ -3,5 +3,9 @@ function s = linestyle(linestyle_index, allstyles)
         allstyles = {'-', ':', '--', '-.'};
     end
     linestyle_index = mod(linestyle_index - 1, length(allstyles)) + 1;
-    s = allstyles{linestyle_index};
+    if length(linestyle_index) == 1
+        s = allstyles{linestyle_index};
+    else
+        s = allstyles(linestyle_index);
+    end
 end
