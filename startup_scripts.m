@@ -63,8 +63,9 @@ end
 
 % profilePath('load', 'CatV1Exp');  cd(CatV1Path)
 
-profilePath('load', 'fhwa'); cd(fhwaCodePath);
+% profilePath('load', 'fhwa'); cd(fhwaMatCodePath);
 
+profilePath('load', 'nyu'); cd(lettersCodePath);
 
 if onNYUserver
     warning('on', 'MATLAB:dispatcher:pathWarning')
