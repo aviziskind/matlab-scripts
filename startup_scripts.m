@@ -61,11 +61,17 @@ if onNYUserver
     warning('off', 'MATLAB:dispatcher:pathWarning')
 end
 
-% profilePath('load', 'CatV1Exp');  cd(CatV1Path)
 
-% profilePath('load', 'fhwa'); cd(fhwaMatCodePath);
+if onNYUserver || strcmp(host, 'cortex')
+    
+    profilePath('load', 'nyu'); cd(lettersCodePath);
 
-profilePath('load', 'nyu'); cd(lettersCodePath);
+elseif strcmp(host, 'neuron')
+    
+    profilePath('load', 'fhwa'); cd(fhwaMatCodePath);
+    
+end
+
 
 if onNYUserver
     warning('on', 'MATLAB:dispatcher:pathWarning')
