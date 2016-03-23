@@ -9,7 +9,7 @@ function s = lettersDataPath
 
      
      
-     if any(strcmp(getHostname(), {'cortex', 'neuron'}))
+     if any(strcmp(deblank(getHostname()), {'cortex', 'neuron'}))
 
          s = [codePath 'nyu' fsep 'letters' fsep 'data' fsep];
 
