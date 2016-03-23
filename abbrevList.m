@@ -25,7 +25,9 @@ function str = abbrevList(X, sep, maxRunBeforeAbbrev)
     if nargin < 3 || isempty(maxRunBeforeAbbrev)
         maxRunBeforeAbbrev = 2;
     end
-
+    if maxRunBeforeAbbrev < 0 
+        maxRunBeforeAbbrev = 1e10;
+    end
     
     abbrevSepValues = {1,    't';
                        0.5,  'h'; 

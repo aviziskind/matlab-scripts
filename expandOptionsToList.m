@@ -11,17 +11,24 @@ function allTables = expandOptionsToList(allOptions, loopKeysOrder)
     
     loopFromFirstToLast = true;
     
-
+    
     % remove tbl_values that are empty cells
     allVals_C = struct2cell(allOptions);
     isEmptyCell = cellfun(@isempty, allVals_C);
     
     fldnames = fieldnames(allOptions);
-    fldnames = fldnames(~isEmptyCell);
     tf_fn_loop = strncmp(fldnames, 'tbl_', 4);
+    
     loopKeys_full = fldnames(tf_fn_loop);
     loopKeys = cellfun(@(s) strrep(s, 'tbl_', ''), loopKeys_full, 'un', 0);
     nonLoopKeys = fldnames(~tf_fn_loop);
+
+    % for loop keys that are empty, replace with a {[]}.
+    empty_loop_keys = fldnames(isEmptyCell & tf_fn_loop);
+    for j = 1:length(empty_loop_keys)
+        allOptions.(empty_loop_keys{j}) = {[]};
+    end
+
     
     if nargin > 1 && ~isempty(loopKeysOrder)
          %%

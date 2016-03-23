@@ -11,6 +11,9 @@ global ID host hostname
 
 if ispc
     host_str = strrep(getenv('COMPUTERNAME'), '-WIN7', '');
+    if strcmp(host_str, 'AZISKIND')
+        host_str = 'neuron';
+    end
     [host, hostname] = deal(host_str);
 else
     host = getenv('host');
@@ -68,7 +71,7 @@ if onNYUserver || strcmp(host, 'cortex')
 
 elseif strcmp(host, 'neuron')
     
-    profilePath('load', 'fhwa'); cd(fhwaMatCodePath);
+    profilePath('load', 'fhwa_local'); cd(fhwaMatCodePath);
     
 end
 

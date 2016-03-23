@@ -3,7 +3,10 @@ function [gradedColors] = stackedColormap(baseColors, nLevelsTot, minLevel, maxL
         baseColors = 4;
     end
     if isscalar(baseColors)
-        baseColors = lines(baseColors);
+%         baseColors = prism(baseColors);
+        origLines_full = [0 0 1; 0 .5 0; 1 0 0; 0 .75 .75; .75 0 .75; .75, .75, 0; .25 .25 .25];
+        baseColors = origLines_full(1:baseColors, :);
+        
         if size(baseColors,1) >= 3
             baseColors([1,3],:) = baseColors([3,1],:);
         end

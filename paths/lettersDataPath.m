@@ -9,11 +9,11 @@ function s = lettersDataPath
 
      
      
-     if onLaptop
+     if any(strcmp(getHostname(), {'cortex', 'neuron'}))
 
          s = [codePath 'nyu' fsep 'letters' fsep 'data' fsep];
 
-     else
+     elseif onNYUserver
           
 %              lettersPath 'datasets' fsep];
 %         s = ['/misc/vlgscratch2/LecunGroup/ziskind/lettersData/MATLAB/datasets/'];
