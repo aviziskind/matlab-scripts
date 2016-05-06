@@ -35,7 +35,7 @@ function s = toStr(x, sep)
     if x == round(x)
         s = sprintf(['%d' sep], x);
     else
-        s = sprintf(['%.1f' sep], x);
+        s = sprintf(['%.2f' sep], x);
     end
     
 end

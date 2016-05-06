@@ -12,7 +12,7 @@ function cs = cellnum2cellstr(cn)
         end
 
     else
-        cs = cellfun(@(num) sprintf('%d', num), cn, 'un', 0);
+        cs = cellfun(@num2str, cn, 'un', 0);
     end
     
 end

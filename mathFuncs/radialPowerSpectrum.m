@@ -1,5 +1,6 @@
 function [pows, freqs] = radialPowerSpectrum(Z, renormalizeR, inputIsFFT_flag)
 %%   
+    persistent all_masks  nR_saved imagesize_saved
     [M,N] = size(Z);
     
     inputIsFFT = exist('inputIsFFT_flag', 'var') && isequal(inputIsFFT_flag, 1);
@@ -67,18 +68,56 @@ function [pows, freqs] = radialPowerSpectrum(Z, renormalizeR, inputIsFFT_flag)
     
     cum_mask = zeros(size(Z));
     %%
+    
+    if isempty(nR_saved) || nR_saved ~= nR || ~isequal(imagesize_saved, size(Z))
+        nR_saved = nR;
+        imagesize_saved = size(Z);
+        all_masks = cell(1, nR);
+        for ri = 1:nR
+            %%
+            
+            %         cur_mask = cosineDecay(r, allR(ri) - 0.5) - cosineDecay(r, allR(ri) + 0.5);
+            cur_abs_mask = abs( r - allR(ri))  < 1;
+            cur_mask = zeros(size(Z));
+            cur_mask(cur_abs_mask) = 1 - abs(r(cur_abs_mask) - allR(ri));
+            
+            cum_mask = cum_mask + cur_mask;
+            %         if sum(Fz(:) .* cur_mask(:)) > 1
+            %             3;
+            %         end
+            
+            all_masks{ri} = cur_mask;
+            if renormalizeR
+                pows(ri) = sum(Fz(:) .* cur_mask(:))   / sum(cur_mask(:));
+            else
+                pows(ri) = sum(Fz(:) .* cur_mask(:)); %   / sum(cur_mask(:));
+            end
+            %         figure(7); imagesc(cur_mask); colormap('gray');
+        end
+        
+        if includeCorners
+            assert(all(cum_mask(:) == 1));
+        else
+            %         assert(all(cum_mask( r <= maxR_use ) == 1));
+        end
+        
+        
+    end
+    
+    
+    
     for ri = 1:nR
         %%
-        
+        cur_mask = all_masks{ri};
 %         cur_mask = cosineDecay(r, allR(ri) - 0.5) - cosineDecay(r, allR(ri) + 0.5);
-        cur_abs_mask = abs( r - allR(ri))  < 1;
-        cur_mask = zeros(size(Z));
-        cur_mask(cur_abs_mask) = 1 - abs(r(cur_abs_mask) - allR(ri));
-        
-        cum_mask = cum_mask + cur_mask;
-        if sum(Fz(:) .* cur_mask(:)) > 1
-            3;
-        end
+%         cur_abs_mask = abs( r - allR(ri))  < 1;
+%         cur_mask = zeros(size(Z));
+%         cur_mask(cur_abs_mask) = 1 - abs(r(cur_abs_mask) - allR(ri));
+%         
+%         cum_mask = cum_mask + cur_mask;
+%         if sum(Fz(:) .* cur_mask(:)) > 1
+%             3;
+%         end
         if renormalizeR
             pows(ri) = sum(Fz(:) .* cur_mask(:))   / sum(cur_mask(:));        
         else
@@ -88,11 +127,7 @@ function [pows, freqs] = radialPowerSpectrum(Z, renormalizeR, inputIsFFT_flag)
     end
     
     %%
-    if includeCorners
-        assert(all(cum_mask(:) == 1));
-    else
-%         assert(all(cum_mask( r <= maxR_use ) == 1));
-    end
+   
     
     
     

@@ -19,7 +19,7 @@ function [cdata_idxs, X, colorbar_ticks] = stackedCData(X, x_lims)
     nLayers = size(X,3);
     addBlackAtBottom = true;
     
-    haveXlims = exist('x_lims', 'var') && ~isempty(x_lims);
+    haveXlims = exist('x_lims', 'var');
     if haveXlims && isvector(x_lims)
         x_lims = repmat(x_lims(:), 1, nLayers);
     end

@@ -8,7 +8,16 @@ function [tiled, imageStack] = tileImages(imageStack, m,n, nBlanks, blankScale, 
         imageStack = cat(3, imageStack{:});
     end
     
-    [h,w,nImages] = size(imageStack);
+    nDims = ndims(imageStack);
+    if nDims == 3
+        [h,w,nImages] = size(imageStack);
+        nPlanes = 1;
+        imageStack = reshape(imageStack, [h,w,nPlanes, nImages]);
+    elseif nDims == 4
+        [h,w,nPlanes,nImages] = size(imageStack);
+    end
+    
+    
     
     if nargin < 2 || isempty(m)
         m = floor(sqrt(nImages));
@@ -40,7 +49,12 @@ function [tiled, imageStack] = tileImages(imageStack, m,n, nBlanks, blankScale, 
     H = (h+nBlanks)*m + nBlanks;
     W = (w+nBlanks)*n + nBlanks;
     
-    tiled = ones(H,W)*blankValue;
+    if islogical( imageStack), 
+        class_use = 'uint8';
+    else
+        class_use =class(imageStack);
+    end
+    tiled = zeros(H,W, nPlanes, class_use)+blankValue;
     cur_h = 1;
     cur_w = 1;
     
@@ -60,7 +74,7 @@ function [tiled, imageStack] = tileImages(imageStack, m,n, nBlanks, blankScale, 
         i_top = nBlanks + (cur_h-1)*(h+nBlanks)+1;
         i_left = nBlanks + (cur_w-1)*(w+nBlanks)+1;
         
-        tiled( i_top + [0:h-1], i_left + [0:w-1]) = imageStack(:,:,i);
+        tiled( i_top + [0:h-1], i_left + [0:w-1], :) = imageStack(:,:,:,i);
         
         if strcmp(fillBy, 'rows')
         

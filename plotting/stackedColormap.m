@@ -4,7 +4,25 @@ function [gradedColors] = stackedColormap(baseColors, nLevelsTot, minLevel, maxL
     end
     if isscalar(baseColors)
 %         baseColors = prism(baseColors);
-        origLines_full = [0 0 1; 0 .5 0; 1 0 0; 0 .75 .75; .75 0 .75; .75, .75, 0; .25 .25 .25];
+%                             r      g       b       cy         mag         yel          gry          bluish   
+%         origLines_full = [0 0 1; 0 .5 0; 1 0 0; 0 .75 .75; .75 0 .75; .75, .75, 0; .25 .25 .25;0 0.447 0.741 ];
+% 
+%         head: 0 0 1;   [r]
+%         Lsh  0 .5 0    [g]  
+%         rSh  1 0 0     [b]
+%         
+%         Ch    .25 .25 .25 ;  [gray]
+%         Rel   0, 0.75, 0.75  [cyan] 
+%         Lel   0.466 0.674 0.188 [greenish]
+%         Rh   0.75 0 0.75  [mag]
+%         Lh   0.75 0.75 0 [yellow]
+
+        origLines_full = [0 0 1; 0 .5 0; 1 0 0; 0.25 0.25 0.25;    0, 0.75 0.75;  0.466 0.674 0.188;  0.75 0 0.75; 0.75 0.75 0]; %  0 .75 .75; .75 0 .75; .75, .75, 0; .25 .25 .25;0 0.447 0.741 ];
+        
+%         origLines_full = [0 0 1; 0 .5 0; 1 0 0; 0 .75 .75; .75 0 .75; .75, .75, 0; .25 .25 .25;0 0.447 0.741 ];
+        
+%       origLines_full = [0 0.447 0.741; 0.850 0.325 0.098; 0.929 0.694 0.125; 0.494 0.184 0.556; 0.466 0.674 0.188; 0.301 0.745 0.933; 0.635 0.078 0.184];
+        
         baseColors = origLines_full(1:baseColors, :);
         
         if size(baseColors,1) >= 3
@@ -42,5 +60,9 @@ function [gradedColors] = stackedColormap(baseColors, nLevelsTot, minLevel, maxL
         gradedColors = [zeros(1,3); gradedColors];
     end
     gradedColors = double( min(gradedColors,1) );
+    
+    if nargout == 0
+        colormap(gradedColors);
+    end
         
 end

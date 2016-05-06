@@ -72,7 +72,7 @@ of a linear scale (the default), by supplying a non-empty 4th argument
             
     end
     
-    if diff(x_lims) == 0 && exist('extend_frac', 'var') && ~isequal(extend_frac, 0)
+    if diff(x_lims) == 0 && exist('extend_frac', 'var') && ~isequal(extend_frac, [0, 0])
         x_lims = x_lims + 1e-3*[-1; 1];
     end
 
