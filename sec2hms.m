@@ -1,7 +1,9 @@
-function str = sec2hms(time_sec)
+function [str, time_sec, time_min, time_hrs, time_days, time_years] = sec2hms(time_sec)
     type = 'seconds';
     sgn = sign(time_sec);
     %%
+    [time_min, time_hrs, time_days, time_years] = deal(0);
+    
     time_sec = abs(time_sec);
     if time_sec >= 60
         time_min = floor(time_sec/60); % convert to minutes
