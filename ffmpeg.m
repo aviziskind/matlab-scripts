@@ -69,7 +69,7 @@ function vals_out = ffmpeg(videoFileName, opt)
         dest_dir = opt.dest_dir;
     end
 
-    image_template_str = 'frame_%06d';
+    image_template_str = 'frame_%06d.jpg';
     if isfield(opt, 'image_template_str')
         image_template_str = opt.image_template_str;
     end
@@ -127,7 +127,7 @@ function vals_out = ffmpeg(videoFileName, opt)
         end
 
         cmd = sprintf('ffmpeg -i %s %s  %s  ''%s%s'' ', ...
-                    videoFileName, frame_str, quality_str, dest_dir, vid_name_template);
+                    videoFileName, frame_str, quality_str, dest_dir, image_template_str);
         fprintf('%s\n', cmd);
         tic;
 
@@ -154,14 +154,21 @@ function vals_out = ffmpeg(videoFileName, opt)
             nsec_start = (grpFrameIds(1)-1) / info.fps;
             nFramesInGroup = length(grpFrameIds);
 
-            time_str = char( info.duration(0,0,nsec_start, 'format', 'hh:mm:ss.SSSSSS'));
+            [~, time_sec, time_min, time_hrs] = sec2hms(nsec_start);
+            time_str = sprintf('%02d:%02d:%09.6f', time_hrs, time_min, time_sec);
+%             time_str = char( duration(0,0,nsec_start, 'format', 'hh:mm:ss.SSSSSS'));
 
 %                 ffmpeg -i myvideo.avi -ss 00:01:00 -vframes 1 myclip.avi
+            if nFramesInGroup == 1
+                image_name_str = sprintf(image_template_str, grpFrameIds);
+            else
+                image_name_str = image_template_str;
+            end
 
-            cmd = sprintf('ffmpeg -ss %s -i %s %s   -vframes %d  %s  ''%s%s'' ', ...
-                time_str, videoFileName, overwrite_str, nFramesInGroup,  quality_str, dest_dir, vid_name_template);
+            cmd = sprintf('ffmpeg -ss %s -i %s %s   -vframes %d  %s  %s%s ', ...
+                time_str, videoFileName, overwrite_str, nFramesInGroup,  quality_str, dest_dir, image_name_str);
 
-            fprintf('Group %d/%d (frameIds = %d:%d) : ', grp_i, length(grps), grpFrameIds(1), grpFrameIds(end) )
+            fprintf('Group %d/%d (frameIds = %d:%d) : \n ', grp_i, length(grps), grpFrameIds(1), grpFrameIds(end) )
 %                 fprintf('%s\n', cmd);
 %                 tic;
             [status, cmd_out] = system(cmd);
