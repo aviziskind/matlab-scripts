@@ -1,4 +1,37 @@
 function testGaussSmooth 
+
+    rng(2);
+    Y = rand(1,100) + [1:100]/100*3;
+%     for i = 1:40
+        w = 5;
+        Y_sm          = gaussSmooth(Y, w, 1,  0); 
+        Y_sm_circ     = gaussSmooth(Y, w, 1,  1); 
+
+        Y_sm_fft      = gaussSmooth(Y, w, 1,  0, 1); 
+        Y_sm_circ_fft = gaussSmooth(Y, w, 1,  1, 1); 
+%     end
+    
+    %%
+    figure(1); clf;
+    subplot(1,2,1);
+    plot(Y, 'b.-');
+    hold on;
+    plot(Y_sm, 'r.-')
+    plot(Y_sm_fft, 'go-')
+    title('Regular');
+    legend('Orig', 'Conv', 'FFT', 'location', 'best')
+
+    subplot(1,2,2);
+    plot(Y, 'b.-');
+    hold on;
+    plot(Y_sm_circ, 'r.-')
+    plot(Y_sm_circ_fft, 'go-')
+    legend('Orig', 'Conv', 'FFT', 'location', 'best')
+   
+    title('Circular');
+    3;
+    %%
+    return;
     X = 1;
 
     t1 = 0:.01:10;

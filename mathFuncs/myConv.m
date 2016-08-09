@@ -14,7 +14,7 @@ function Y = myConv(X, c, dim, convShape)
         switch convShape
             case 'full', sameShape = false;
             case 'same', sameShape = true;
-            otherwise error('Unknown convolution shape');
+            otherwise, error('Unknown convolution shape');
         end
     end
     

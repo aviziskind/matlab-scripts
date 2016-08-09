@@ -117,28 +117,40 @@ function vals_out = ffmpeg(videoFileName, opt)
 %     
 %     if 
     
-    
+      
+    if ~exist(dest_dir, 'dir')
+        mkdir(dest_dir)
+    end
     if isempty(frameIds)
         nFrm = str2double(frames);
         if strcmp(frames, 'all')
             frame_str = '';
+%             frame_str = sprintf(' -vframes %d', info.nframes);
         elseif ~isnan(nFrm)
             frame_str = sprintf(' -vframes %d', nFrm);
         end
 
-        cmd = sprintf('ffmpeg -i %s %s  %s  ''%s%s'' ', ...
+%         videoFileName = strrep(videoFileName, '\', '\\');
+%         dest_dir = strrep(dest_dir, '\', '\\');
+      
+
+        videoFileName = strrep(videoFileName, [pwd '\'], '');
+        dest_dir = strrep(dest_dir, [pwd '\'], '');
+        
+        
+        cmd = sprintf('ffmpeg -i %s %s  %s  %s%s ', ...
                     videoFileName, frame_str, quality_str, dest_dir, image_template_str);
         fprintf('%s\n', cmd);
         tic;
-
-        cmd_str = sprintf('ffmpeg -i %s', videoFileName);
-        [status, output] = system(cmd_str);
+        % ffmpeg -i CS_157688_chunk_000.avi   -q:v 1  frames\frame_%06d.jpg 
+%         cmd_str = sprintf('ffmpeg -i %s', videoFileName);
+        [status, output] = system(cmd);
         assert(status == 0);
 
 %             system(cmd);
         toc;
 
-
+%         ffmpeg -ss 00:00:00.000000 -i CS_157688_chunk_000.avi  -y   -vframes 6807  -q:v 1  frames\frame_%06d.jpg 
     else  % get a particular set of frames
 
         grps = continuousGroupings(frameIds);
@@ -167,7 +179,7 @@ function vals_out = ffmpeg(videoFileName, opt)
 
             cmd = sprintf('ffmpeg -ss %s -i %s %s   -vframes %d  %s  %s%s ', ...
                 time_str, videoFileName, overwrite_str, nFramesInGroup,  quality_str, dest_dir, image_name_str);
-
+%%
             fprintf('Group %d/%d (frameIds = %d:%d) : \n ', grp_i, length(grps), grpFrameIds(1), grpFrameIds(end) )
 %                 fprintf('%s\n', cmd);
 %                 tic;

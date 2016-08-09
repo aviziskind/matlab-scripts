@@ -9,7 +9,7 @@ function [tiled, imageStack] = tileImages(imageStack, m,n, nBlanks, blankScale, 
     end
     
     nDims = ndims(imageStack);
-    if nDims == 3
+    if nDims <= 3
         [h,w,nImages] = size(imageStack);
         nPlanes = 1;
         imageStack = reshape(imageStack, [h,w,nPlanes, nImages]);
