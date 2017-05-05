@@ -21,5 +21,8 @@ function h = hashvariable(X)
 end
 
 function h = hashfunc(h)
+    if abs(h) > 2^31
+        h = log(abs(h));
+    end
     h = (h-floor(h)) + mod(h, 2^32);
 end

@@ -65,11 +65,11 @@ if onNYUserver
 end
 
 
-if onNYUserver || strcmp(host, 'cortex')
+if onNYUserver || strcmpi(host, 'cortex')
     
     profilePath('load', 'nyu'); cd(lettersCodePath);
 
-elseif strcmp(host, 'neuron')
+elseif strcmpi(host, 'neuron')
     
     profilePath('load', 'fhwa_local'); cd(fhwaMatCodePath);
     

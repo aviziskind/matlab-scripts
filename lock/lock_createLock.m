@@ -59,8 +59,9 @@ function [tf, otherLockID] = lock_createLock(lock_name)
     fclose(fid);
     fprintf('    [Just created a lock : %s]\n', lock_file_name_withID);
         
-    
-    pause(secondsToWaitAfterCreatingLock)
+    if ~onLaptop
+        pause(secondsToWaitAfterCreatingLock);
+    end
     
   %  allLocks2 = lock_getAllLocks()
   %  nLocksWithSameBase_AfterLocked = nInTableThatSatisfy(allLocks2, lock_getLockName, lock_file_name)
