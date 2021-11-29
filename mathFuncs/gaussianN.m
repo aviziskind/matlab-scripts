@@ -14,7 +14,7 @@ function Y = gaussianN(X, M, C)
         end
         X_list = [xs(:) ys(:)]';
         
-        Y_list = gaussian2D(X_list, M, C);
+        Y_list = gaussianN(X_list, M, C);
         
         Y = reshape(Y_list, sizeX);
         return;

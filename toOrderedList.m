@@ -1,4 +1,6 @@
 function str = toOrderedList(x, nMax, sep, maxRunBeforeAbbrev)
+    
+    
     if nargin < 2 || isempty(nMax)
         nMax = length(x);
     end
@@ -12,6 +14,9 @@ function str = toOrderedList(x, nMax, sep, maxRunBeforeAbbrev)
     if nargin < 4 || isempty(maxRunBeforeAbbrev)
         maxRunBeforeAbbrev = 2;
     end
+
+    str = abbrevList(x, sep, maxRunBeforeAbbrev);
+    return;
     
 %     if nargin < 5 || isempty(abbrevSepAll)
 %         abbrevSepAll = 'thq';

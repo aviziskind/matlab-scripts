@@ -9,7 +9,7 @@ function X = padarray2(X, pad_l, pad_r, pad_t, pad_b, padValue)
         padValue = 0;
     end
     
-    X = padarray(X, [pad_t, pad_l], padValue, 'pre');
-    X = padarray(X, [pad_b, pad_r], padValue, 'post');
+    X = padarray(X, double([pad_t, pad_l]), padValue, 'pre');
+    X = padarray(X, double([pad_b, pad_r]), padValue, 'post');
 
 end

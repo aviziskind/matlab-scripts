@@ -5,6 +5,7 @@ function S = mergeStructs(varargin)
     
         flds = fieldnames(S_i);
         for fld_j = 1:length(flds)
+%             fprintf('%s\n', flds{fld_j});
             S.(flds{fld_j}) = S_i.(flds{fld_j});
         end    
     end

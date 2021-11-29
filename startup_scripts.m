@@ -2,7 +2,8 @@
 % Default preferences
 format compact
 dbstop if error;
-set(0,'DefaultFigureWindowStyle','docked') 
+set(0,'DefaultFigureWindowStyle','docked')
+
 
 %%
 % Set global host name / ID variables
@@ -58,6 +59,14 @@ else            % linux
     % opengl neverselect; % causes a crash when opengl is used on linux
 end
 
+if ~onNYUserver
+    %pause(5);
+    %profilePath('load', 'nyu');
+    %pause(5);
+    %fprintf('loaded paths');
+    %cd(lettersCodePath);
+    return;
+end
 
 % load NYU path
 if onNYUserver

@@ -28,15 +28,18 @@ function str = abbrevList(X, sep, maxRunBeforeAbbrev)
     if maxRunBeforeAbbrev < 0 
         maxRunBeforeAbbrev = 1e10;
     end
+
+    useColonForSeries = strcmp(sep, ',');
     
     abbrevSepValues = {1,    't';
                        0.5,  'h'; 
                        0.25, 'q'; 
-                       5,    'f';
-                       10,   'd'};
+                       0.1,  'd';
+                       5,    'F';
+                       10,   'D'};
 
     useHforHalfValues = true;
-    
+    diff_th = 1e-10;
     str = '';
     
     L = length(X);
@@ -58,7 +61,7 @@ function str = abbrevList(X, sep, maxRunBeforeAbbrev)
         curDiff = initDiff;
         
         
-        while (curIdx+runLength < L) && (curDiff == initDiff) 
+        while (curIdx+runLength < L) && abs(curDiff - initDiff) < diff_th 
             runLength = runLength + 1;
             if curIdx+runLength < L 
                 curDiff = X(curIdx+runLength+1) - X(curIdx+runLength);
@@ -78,8 +81,12 @@ function str = abbrevList(X, sep, maxRunBeforeAbbrev)
                     diffVal = abbrevSepValues{j,1};
                     diffSymbol = abbrevSepValues{j,2};
 
-                    if initDiff == diffVal 
-                        abbrevSep = diffSymbol;
+                    if abs(initDiff - diffVal) < diff_th
+                        if useColonForSeries
+                            abbrevSep = [':' num2str(initDiff) ':'];
+                        else
+                            abbrevSep = diffSymbol;
+                        end
                     end
                 end
 
